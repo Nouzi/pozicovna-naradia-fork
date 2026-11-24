@@ -15,11 +15,11 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "node node_modules/typescript7/bin/tsc --noEmit",
+    "lint": "eslint --max-warnings 0 .",
     "db:migrate": "tsx server/db/cli.ts migrate",
     "db:seed": "tsx server/db/cli.ts seed",
     "db:reset": "tsx server/db/cli.ts reset",
-    "storybook": "storybook dev -p 6006",
-    "lint": "eslint --max-warnings 0 ."
+    "storybook": "storybook dev -p 6006"
   },
   "dependencies": {
     "@hono/node-server": "^2.1.9",

@@ -13,6 +13,10 @@ export default defineConfig([
   {
     // Hooky sú iba vo frontende.
     files: ['src/client/**/*.{ts,tsx}'],
-    extends: [reactHooks.configs.flat.recommended]
+    extends: [reactHooks.configs.flat.recommended],
+    rules: {
+      // Chýbajúca závislosť efektu je chyba aj v editore, nielen cez --max-warnings 0.
+      'react-hooks/exhaustive-deps': 'error'
+    }
   }
 ]);

@@ -17,6 +17,7 @@ export function useNacitanie<T>(nacitaj: () => Promise<T>): Nacitanie<T> {
   const [nacitava, setNacitava] = useState(true);
 
   // Stav nastavuje iba v callbackoch po odpovedi z API, nie synchrónne, preto ju smie volať aj efekt.
+  // Zámerne cez .then, nie async/await: pravidlo react-hooks/set-state-in-effect nevidí, že setState je až po await.
   const nacitajDoStavu = useCallback(
     () =>
       nacitaj()
