@@ -232,9 +232,12 @@ Frontend je React s Vite, API je [Hono](https://hono.dev) na Node.js, databáza 
 | `npm test` | Spustí testy. |
 | `npm run test:watch` | Spúšťa testy pri každej zmene. |
 | `npm run typecheck` | Skontroluje typy v celom projekte. |
+| `npm run lint` | Skontroluje kód cez ESLint (pravidlá pre TypeScript a React hooks). Zlyhá aj pri varovaní. |
 | `npm run build` | Skontroluje typy a zostaví frontend do `dist/`. |
 | `npm run db:migrate` | Spustí nové migrácie databázy. |
 | `npm run db:reset` | Zmaže lokálnu databázu, spustí migrácie a naplní ju testovacími dátami. |
+
+Typy kontroluje TypeScript 7 z balíka `typescript7`. Pod názvom `typescript` je nainštalovaný TypeScript 6, lebo typescript-eslint s TypeScriptom 7 zatiaľ nefunguje. Príkaz `npx tsc` preto môže spustiť TypeScript 6, typy kontrolujte cez `npm run typecheck`.
 
 ### Štruktúra
 

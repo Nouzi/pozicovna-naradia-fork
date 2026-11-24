@@ -29,7 +29,7 @@ export function spustiMigracie(db: Databaza, priecinok = PRIECINOK_MIGRACII): st
         db.prepare('INSERT INTO migracie (nazov) VALUES (?)').run(subor);
       });
     } catch (chyba) {
-      throw new Error(`Migrácia ${subor} zlyhala: ${(chyba as Error).message}`);
+      throw new Error(`Migrácia ${subor} zlyhala: ${(chyba as Error).message}`, { cause: chyba });
     }
   }
   return nove;

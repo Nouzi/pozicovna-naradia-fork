@@ -16,21 +16,28 @@ export function useNacitanie<T>(nacitaj: () => Promise<T>): Nacitanie<T> {
   const [chyba, setChyba] = useState<string | null>(null);
   const [nacitava, setNacitava] = useState(true);
 
+  // Stav nastavuje iba v callbackoch po odpovedi z API, nie synchrónne, preto ju smie volať aj efekt.
+  const nacitajDoStavu = useCallback(
+    () =>
+      nacitaj()
+        .then((noveData) => {
+          setData(noveData);
+          setChyba(null);
+        })
+        .catch((e: unknown) => setChyba(e instanceof Error ? e.message : 'Dáta sa nepodarilo načítať.'))
+        .finally(() => setNacitava(false)),
+    [nacitaj]
+  );
+
   const obnov = useCallback(async () => {
     setNacitava(true);
-    try {
-      setData(await nacitaj());
-      setChyba(null);
-    } catch (e) {
-      setChyba(e instanceof Error ? e.message : 'Dáta sa nepodarilo načítať.');
-    } finally {
-      setNacitava(false);
-    }
-  }, [nacitaj]);
+    await nacitajDoStavu();
+  }, [nacitajDoStavu]);
 
+  // `nacitava` je na začiatku true, takže efekt ho nemusí nastavovať a rovno načítava.
   useEffect(() => {
-    void obnov();
-  }, [obnov]);
+    void nacitajDoStavu();
+  }, [nacitajDoStavu]);
 
   return { data, chyba, nacitava, obnov };
 }
